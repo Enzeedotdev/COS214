@@ -10,7 +10,7 @@
  * @param noticeType The type of the notice as a string.
  * @param noticeDescription Additional descriptive information.
  */
-Notice::Notice(std::string& noticeType, std::string& noticeDescription) : type(noticeType), description(noticeDescription) {}
+Notice::Notice(std::string noticeType, std::string noticeDescription) : type(noticeType), description(noticeDescription) {}
 
 /**
  * @brief Retrieves the notice description.
