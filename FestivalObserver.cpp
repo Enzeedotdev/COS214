@@ -141,6 +141,7 @@ int FestivalGroup::getCapacity() const {
 void FestivalGroup::update(Notice* notice) {
     if (notice == nullptr) return;
     std::cout << name << " received notice: " << notice->getNotice() << std::endl;
+    lastReceivedNotice = notice;
     notify();
 }
 
@@ -168,5 +169,15 @@ void FestivalGroup::detach(FestivalObserver* observer) {
         std::cout << "Observer detached from " << name << "." << std::endl;
     } else {
         std::cout << "Observer not found in " << name << " - nothing detached." << std::endl;
+    }
+}
+
+void FestivalGroup::notify() {
+    if (lastReceivedNotice == nullptr) return;
+    
+    for (FestivalObserver* observer : observerList) {
+        if (observer != nullptr) {
+            observer->update(lastReceivedNotice);
+        }
     }
 }
