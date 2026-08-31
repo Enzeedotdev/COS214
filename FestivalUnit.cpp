@@ -33,3 +33,9 @@ int FestivalUnit::getCapacity() const
 {
     return capacity;
 }
+
+void FestivalUnit::update(Notice* notice) {
+    if (notice == nullptr) return;
+ 
+    std::cout << name << " received notice: " << notice->getNotice() << std::endl;
+}
