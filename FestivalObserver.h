@@ -184,6 +184,7 @@ private:
      * @brief Owned child components.
      */
     std::vector<FestivalComponent*> children;
+    Notice* lastReceivedNotice;
 
 public:
 
