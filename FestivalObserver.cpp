@@ -3,7 +3,6 @@
 #include <iostream>
 #include <algorithm>
 #include "FestivalObserver.h"
-#include "FestivalComponent.h"
 
 /**
  * @brief Constructs a Notice object.
@@ -11,44 +10,82 @@
  * @param noticeType The type of the notice as a string.
  * @param noticeDescription Additional descriptive information.
  */
-
 Notice::Notice(std::string& noticeType, std::string& noticeDescription) : type(noticeType), description(noticeDescription) {}
 
 /**
- * @brief Retrieves the notice type.
+ * @brief Retrieves the notice description.
  * 
- * @return The type of the notice as a string.
+ * @return The description of the notice.
  */
-
-std::string Notice::getNotice() const{
+std::string Notice::getNotice() const {
     return description;
 }
 
+/**
+ * @brief Gets the notice type as an enum value.
+ * 
+ * @return The NoticeType enum value.
+ */
+Notice::NoticeType Notice::getNoticeType() const {
+    if (type == "OPEN") return OPEN;
+    if (type == "CLOSE") return CLOSE;
+    if (type == "SCHEDULE_CHANGE") return SCHEDULE_CHANGE;
+    if (type == "CAPACITY_ALERT") return CAPACITY_ALERT;
+    if (type == "WEATHER_ALERT") return WEATHER_ALERT;
+    if (type == "PAUSE") return PAUSE;
+    if (type == "RESUME") return RESUME;
+    if (type == "EVACUATE") return EVACUATE;
+    return OPEN; // default
+}
+
+/**
+ * @brief Constructs a FestivalControl object.
+ */
 FestivalControl::FestivalControl() : currentNotice(nullptr) {}
 
+/**
+ * @brief Issues a notice to all registered observers.
+ * 
+ * The notice is stored as the current notice and broadcast
+ * to all registered observers.
+ * 
+ * @param notice The notice to issue. Must not be nullptr.
+ */
 void FestivalControl::issueNotice(Notice* notice) {
     if (notice == nullptr) return;
+    
     currentNotice = notice;
     notify();
 }
 
+/**
+ * @brief Registers an observer with the control system.
+ * 
+ * @param observer Pointer to the observer to register.
+ *                 Must not be nullptr.
+ */
 void FestivalControl::attach(FestivalObserver* observer) {
     if(observer == nullptr) {
         return;
     }
 
-        for (size_t i = 0; i < observerList.size(); i++) {
-            if (observerList[i] == observer)
-            {
-                std::cout << "Observer already registered." << std::endl;
-                return;
-            }
+    // Prevent duplicate registration
+    for (size_t i = 0; i < observerList.size(); i++) {
+        if (observerList[i] == observer) {
+            std::cout << "Observer already registered." << std::endl;
+            return;
         }
+    }
     
-    this->observerList.push_back(observer);
+    observerList.push_back(observer);
     std::cout << "Observer attached." << std::endl;
 }
 
+/**
+ * @brief Unregisters an observer from the control system.
+ * 
+ * @param observer Pointer to the observer to detach.
+ */
 void FestivalControl::detach(FestivalObserver* observer) {
     if(observer == nullptr) {
         return;
@@ -63,39 +100,81 @@ void FestivalControl::detach(FestivalObserver* observer) {
     }
 }
 
+/**
+ * @brief Notifies all registered observers.
+ * 
+ * Broadcasts the current notice to all observers.
+ */
 void FestivalControl::notify() {
     if (currentNotice == nullptr) {
         std::cout << "No current notice to broadcast." << std::endl;
         return;
     }
 
-    for(FestivalObserver* observer: observerList) {
+    for(FestivalObserver* observer : observerList) {
         if(observer != nullptr) {
             observer->update(currentNotice);
         }
     }
 }
 
-FestivalGroup::FestivalGroup(const std::string& name, int capacity) : FestivalComponent(name, capacity) {}
+// ============================================================
+// FestivalGroup Implementation
+// ============================================================
 
+/**
+ * @brief Creates a festival group.
+ *
+ * @param name Name of the group.
+ * @param capacity Initial capacity.
+ */
+FestivalGroup::FestivalGroup(const std::string& name, int capacity) : FestivalComponent(name, capacity), lastReceivedNotice(), hasReceivedNotice(false) {}
+
+/**
+ * @brief Destroys the group and all owned children.
+ */
 FestivalGroup::~FestivalGroup() {
-    for (size_t i = 0; i < children.size(); i++)
-    {
+    // Delete all owned children
+    for (size_t i = 0; i < children.size(); i++) {
         delete children[i];
     }
 }
 
+/**
+ * @brief Adds a child component.
+ *
+ * Ownership of the component is transferred to the group.
+ *
+ * @param component Component to add.
+ */
 void FestivalGroup::add(FestivalComponent* component) {
     if (component != nullptr) {
         children.push_back(component);
     }
 }
 
+/**
+ * @brief Removes a child component.
+ *
+ * The component is removed without being deleted.
+ * Ownership is transferred to the caller.
+ * If the component is also an Observer, it is detached.
+ *
+ * @param component Component to remove.
+ * @return Pointer to the removed component.
+ */
 FestivalComponent* FestivalGroup::remove(FestivalComponent* component) {
     for (auto it = children.begin(); it != children.end(); ++it) {
         if (*it == component) {
             FestivalComponent* removed = *it;
             children.erase(it);
+            
+            // Also detach from observers if it was registered
+            FestivalObserver* obs = dynamic_cast<FestivalObserver*>(component);
+            if (obs != nullptr) {
+                detach(obs);
+            }
+            
             return removed;
         }
     }
@@ -103,51 +182,33 @@ FestivalComponent* FestivalGroup::remove(FestivalComponent* component) {
     return nullptr;
 }
 
-void FestivalGroup::open() {
-    std::cout << "\nOpening " << name << " ...\n" <<  std::endl;
-
-    for (size_t i = 0; i < children.size(); i++) {
-        children[i]->open();
-    }
-}
-
-void FestivalGroup::close() {
-    std::cout << "\nClosing " << name << " ...\n" << std::endl;
-
-    for (size_t i = 0; i < children.size(); i++)
-    {
-        children[i]->close();
-    }
-}
-
-void FestivalGroup::reportStatus() const {
-    std::cout << "\nReporting status for " << name << " : " << std::endl;
-
-    for (size_t i = 0; i < children.size(); i++) {
-        children[i]->reportStatus();
-    }
-}
-
-int FestivalGroup::getCapacity() const {
-    int total = 0;
-
-    for (size_t i = 0; i < children.size(); i++) {
-        total += children[i]->getCapacity();
-    }
-
-    return total;
-}
-
+/**
+ * @brief Called when a notice is received from a parent subject.
+ * 
+ * As an Observer, this method processes the notice and then
+ * forwards it to all registered observers.
+ * 
+ * @param notice The notice received. Must not be nullptr.
+ */
 void FestivalGroup::update(Notice* notice) {
     if (notice == nullptr) return;
+    
     std::cout << name << " received notice: " << notice->getNotice() << std::endl;
-    lastReceivedNotice = notice;
-    notify();
+    
+    // Store the notice for forwarding
+    lastReceivedNotice = *notice;
+    hasReceivedNotice = true;
 }
 
+/**
+ * @brief Registers an observer with this group.
+ * 
+ * @param observer The observer to register. Must not be nullptr.
+ */
 void FestivalGroup::attach(FestivalObserver* observer) {
     if(observer == nullptr) return;
 
+    // Prevent duplicate registration
     for (size_t i = 0; i < observerList.size(); i++) {
         if (observerList[i] == observer) {
             std::cout << "Observer already registered to " << name << "." << std::endl;
@@ -159,10 +220,14 @@ void FestivalGroup::attach(FestivalObserver* observer) {
     std::cout << "Observer attached to " << name << "." << std::endl;
 }
 
+/**
+ * @brief Unregisters an observer from this group.
+ * 
+ * @param observer The observer to detach.
+ */
 void FestivalGroup::detach(FestivalObserver* observer) {
     if(observer == nullptr) return;
     
-
     auto it = std::remove(observerList.begin(), observerList.end(), observer);
     if (it != observerList.end()) {
         observerList.erase(it, observerList.end());
@@ -172,12 +237,63 @@ void FestivalGroup::detach(FestivalObserver* observer) {
     }
 }
 
+/**
+ * @brief Notifies all registered observers with the last received notice.
+ */
 void FestivalGroup::notify() {
-    if (lastReceivedNotice == nullptr) return;
+    if (!hasReceivedNotice) return;
     
     for (FestivalObserver* observer : observerList) {
         if (observer != nullptr) {
-            observer->update(lastReceivedNotice);
+            observer->update(&lastReceivedNotice);
         }
     }
+}
+
+/**
+ * @brief Opens this group and all children.
+ */
+void FestivalGroup::open() {
+    std::cout << "\nOpening " << name << " ...\n" << std::endl;
+
+    for (size_t i = 0; i < children.size(); i++) {
+        children[i]->open();
+    }
+}
+
+/**
+ * @brief Closes this group and all children.
+ */
+void FestivalGroup::close() {
+    std::cout << "\nClosing " << name << " ...\n" << std::endl;
+
+    for (size_t i = 0; i < children.size(); i++) {
+        children[i]->close();
+    }
+}
+
+/**
+ * @brief Reports the status of this group and its children.
+ */
+void FestivalGroup::reportStatus() const {
+    std::cout << "\nReporting status for " << name << " : " << std::endl;
+
+    for (size_t i = 0; i < children.size(); i++) {
+        children[i]->reportStatus();
+    }
+}
+
+/**
+ * @brief Calculates the total capacity of the subtree.
+ *
+ * @return Total capacity.
+ */
+int FestivalGroup::getCapacity() const {
+    int total = 0;
+
+    for (size_t i = 0; i < children.size(); i++) {
+        total += children[i]->getCapacity();
+    }
+
+    return total;
 }
