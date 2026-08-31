@@ -122,7 +122,7 @@ class FestivalControl : public FestivalSubject {
          * 
          * @param notice The notice to issue.
          */
-        void issueNotice(Notice notice);
+        void issueNotice(Notice* notice);
 
         /**
          * @brief Registers an observer with the control system.
@@ -166,7 +166,7 @@ class FestivalObserver {
          * 
          * @param notice The notice being broadcast.
          */
-        virtual void update(const Notice& notice) = 0;
+        virtual void update(Notice* notice) = 0;
 };
 
 /**
@@ -219,7 +219,7 @@ public:
      * @return Pointer to the removed component.
      */
     FestivalComponent* remove(FestivalComponent* component);
-    void update(Notice notice);
+    void update(Notice* notice);
     void attach(FestivalObserver* observer);
     void detach(FestivalObserver* observer);
     void notify();
