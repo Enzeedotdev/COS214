@@ -39,7 +39,7 @@ FestivalComponent* FestivalGroup::remove(FestivalComponent* component)
 
 void FestivalGroup::open()
 {
-    std::cout << "\nOpening group: " << name << std::endl;
+    std::cout << "\nOpening " << name << " ...\n" <<  std::endl;
 
     for (size_t i = 0; i < children.size(); i++)
     {
@@ -49,7 +49,7 @@ void FestivalGroup::open()
 
 void FestivalGroup::close()
 {
-    std::cout << "\nClosing group: " << name << std::endl;
+    std::cout << "\nClosing " << name << " ...\n" << std::endl;
 
     for (size_t i = 0; i < children.size(); i++)
     {
@@ -59,7 +59,7 @@ void FestivalGroup::close()
 
 void FestivalGroup::reportStatus() const
 {
-    std::cout << "\n" << name << " " << std::endl;
+    std::cout << "\nReporting status for " << name << " : " << std::endl;
 
     for (size_t i = 0; i < children.size(); i++)
     {
