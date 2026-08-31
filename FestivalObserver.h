@@ -33,9 +33,9 @@ class FestivalSubject {
     public:
         FestivalSubject();
         ~FestivalSubject();
-        void attach(FestivalObserver* observer);
-        void detach(FestivalObserver* observer);
-        void notify();
+        virtual void attach(FestivalObserver* observer) = 0;
+        virtual void detach(FestivalObserver* observer) = 0;
+        virtual void notify() = 0;
 };
 
 class FestivalControl : public FestivalSubject {
