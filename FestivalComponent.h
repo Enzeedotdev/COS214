@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include "FestivalObserver.h"
 
 /**
 * @brief Common component abstraction for all festival elements.
@@ -62,7 +63,7 @@ public:
  * Composite pattern. It owns FestivalComponent children
  * and applies operations recursively across the subtree.
  */
-class FestivalGroup : public FestivalComponent
+class FestivalGroup : public FestivalComponent, public FestivalObserver, public FestivalSubject
 {
 private:
 
@@ -105,6 +106,10 @@ public:
      * @return Pointer to the removed component.
      */
     FestivalComponent* remove(FestivalComponent* component);
+    void update(Notice notice);
+    void attach(FestivalObserver* observer);
+    void detach(FestivalObserver* observer);
+    void notify();
 
     /**
      * @brief Opens this group and all children.
@@ -314,4 +319,4 @@ public:
     void close() override;
 };
 
-#endif
+#endif //FESTIVALCOMPONENT_H
