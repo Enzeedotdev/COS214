@@ -3,6 +3,7 @@
 #include <iostream>
 #include <algorithm>
 #include "FestivalObserver.h"
+#include "FestivalComponent.h"
 
 /**
  * @brief Constructs a Notice object.
@@ -25,8 +26,9 @@ std::string Notice::getNotice() const{
 
 FestivalControl::FestivalControl() : currentNotice(nullptr) {}
 
-void FestivalControl::issueNotice(Notice notice) {
-    currentNotice = &notice;
+void FestivalControl::issueNotice(Notice* notice) {
+    if (notice == nullptr) return;
+    currentNotice = notice;
     notify();
 }
 
@@ -69,7 +71,75 @@ void FestivalControl::notify() {
 
     for(FestivalObserver* observer: observerList) {
         if(observer != nullptr) {
-            observer->update(*currentNotice);
+            observer->update(currentNotice);
         }
     }
+}
+
+FestivalGroup::FestivalGroup(const std::string& name, int capacity) : FestivalComponent(name, capacity) {}
+
+FestivalGroup::~FestivalGroup() {
+    for (size_t i = 0; i < children.size(); i++)
+    {
+        delete children[i];
+    }
+}
+
+void FestivalGroup::add(FestivalComponent* component) {
+    if (component != nullptr) {
+        children.push_back(component);
+    }
+}
+
+FestivalComponent* FestivalGroup::remove(FestivalComponent* component) {
+    for (auto it = children.begin(); it != children.end(); ++it) {
+        if (*it == component) {
+            FestivalComponent* removed = *it;
+            children.erase(it);
+            return removed;
+        }
+    }
+
+    return nullptr;
+}
+
+void FestivalGroup::open() {
+    std::cout << "\nOpening " << name << " ...\n" <<  std::endl;
+
+    for (size_t i = 0; i < children.size(); i++) {
+        children[i]->open();
+    }
+}
+
+void FestivalGroup::close() {
+    std::cout << "\nClosing " << name << " ...\n" << std::endl;
+
+    for (size_t i = 0; i < children.size(); i++)
+    {
+        children[i]->close();
+    }
+}
+
+void FestivalGroup::reportStatus() const {
+    std::cout << "\nReporting status for " << name << " : " << std::endl;
+
+    for (size_t i = 0; i < children.size(); i++) {
+        children[i]->reportStatus();
+    }
+}
+
+int FestivalGroup::getCapacity() const {
+    int total = 0;
+
+    for (size_t i = 0; i < children.size(); i++) {
+        total += children[i]->getCapacity();
+    }
+
+    return total;
+}
+
+void FestivalGroup::update(Notice* notice) {
+    if (notice == nullptr) return;
+    std::cout << name << " received notice: " << notice->getNotice() << std::endl;
+    notify();
 }
