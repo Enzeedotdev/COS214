@@ -2,6 +2,7 @@
 #define FESTIVALUNIT_H
 
 #include "FestivalComponent.h"
+#include "FestivalObserver.h"
 
 /**
  * @brief Represents an operational unit within the festival.
@@ -10,7 +11,7 @@
  * pattern. Unlike FestivalGroup, a FestivalUnit cannot contain
  * other FestivalComponents.
  */
-class FestivalUnit : public FestivalComponent
+class FestivalUnit : public FestivalComponent, public FestivalObserver
 {
 protected:
 
@@ -55,6 +56,15 @@ public:
      * @return Unit capacity.
      */
     virtual int getCapacity() const override;
+
+        /**
+     * @brief Called when a notice is received from a subject.
+     *
+     * Concrete leaves override this to react differently to notices.
+     *
+     * @param notice The notice received. Must not be nullptr.
+     */
+    virtual void update(Notice* notice) override;
 };
 
 #endif
