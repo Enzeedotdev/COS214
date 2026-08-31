@@ -128,7 +128,7 @@ void FestivalControl::notify() {
  * @param name Name of the group.
  * @param capacity Initial capacity.
  */
-FestivalGroup::FestivalGroup(const std::string& name, int capacity) : FestivalComponent(name, capacity), lastReceivedNotice(), hasReceivedNotice(false) {}
+FestivalGroup::FestivalGroup(const std::string& name, int capacity) : FestivalComponent(name, capacity), hasReceivedNotice(false) {}
 
 /**
  * @brief Destroys the group and all owned children.
