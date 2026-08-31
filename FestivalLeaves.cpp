@@ -28,6 +28,30 @@ void MainStage::close()
               << std::endl;
 }
 
+void MainStage::update(Notice* notice) {
+    if (notice == nullptr) return;
+    
+    switch (notice->getNoticeType()) {
+        case Notice::WEATHER_ALERT:
+            std::cout << "MainStage: Pausing performance due to weather!" << std::endl;
+            break;
+        case Notice::EVACUATE:
+            std::cout << "MainStage: Evacuating crowd immediately!" << std::endl;
+            break;
+        case Notice::OPEN:
+            std::cout << "MainStage: Opening for performances." << std::endl;
+            break;
+        case Notice::CLOSE:
+            std::cout << "MainStage: Closing after final performance." << std::endl;
+            break;
+        case Notice::SCHEDULE_CHANGE:
+            std::cout << "MainStage: Adjusting performance schedule." << std::endl;
+            break;
+        default:
+            std::cout << "MainStage: Received notice." << std::endl;
+    }
+}
+
 BackStage::BackStage(int crewMembers, int capacity)
     : FestivalUnit("Back Stage", capacity),
       crewMembers(crewMembers)
@@ -55,6 +79,30 @@ void BackStage::close()
               << std::endl;
 }
 
+void BackStage::update(Notice* notice) {
+    if (notice == nullptr) return;
+    
+    switch (notice->getNoticeType()) {
+        case Notice::WEATHER_ALERT:
+            std::cout << "BackStage: Securing equipment from weather!" << std::endl;
+            break;
+        case Notice::EVACUATE:
+            std::cout << "BackStage: Assisting performers to safety!" << std::endl;
+            break;
+        case Notice::SCHEDULE_CHANGE:
+            std::cout << "BackStage: Coordinating new schedule with crew." << std::endl;
+            break;
+        case Notice::OPEN:
+            std::cout << "BackStage: Opening for crew preparations." << std::endl;
+            break;
+        case Notice::CLOSE:
+            std::cout << "BackStage: Closing operations." << std::endl;
+            break;
+        default:
+            std::cout << "BackStage: Received notice: " << notice->getNotice() << std::endl;
+    }
+}
+
 DJStage::DJStage(const std::string& dj, int capacity)
     : FestivalUnit("DJ Stage", capacity),
       currentDJ(dj)
@@ -80,6 +128,39 @@ void DJStage::close()
     isOpen = false;
     std::cout << "The DJ Stage has powered down after its final set."
               << std::endl;
+}
+
+void DJStage::update(Notice* notice) {
+    if (notice == nullptr) return;
+    
+    switch (notice->getNoticeType()) {
+        case Notice::WEATHER_ALERT:
+            std::cout << "DJStage: Moving equipment indoors due to weather!" << std::endl;
+            break;
+        case Notice::EVACUATE:
+            std::cout << "DJStage: Shutting down audio and evacuating!" << std::endl;
+            break;
+        case Notice::SCHEDULE_CHANGE:
+            std::cout << "DJStage: Adjusting DJ set times." << std::endl;
+            break;
+        case Notice::CAPACITY_ALERT:
+            std::cout << "DJStage: Limiting entry to dance floor." << std::endl;
+            break;
+        case Notice::OPEN:
+            std::cout << "DJStage: Opening for electronic music sets." << std::endl;
+            break;
+        case Notice::CLOSE:
+            std::cout << "DJStage: Closing after final set." << std::endl;
+            break;
+        case Notice::PAUSE:
+            std::cout << "DJStage: Pausing music temporarily." << std::endl;
+            break;
+        case Notice::RESUME:
+            std::cout << "DJStage: Resuming music." << std::endl;
+            break;
+        default:
+            std::cout << "DJStage: Received notice: " << notice->getNotice() << std::endl;
+    }
 }
 
 DanceFloor::DanceFloor(int maxOccupancy)
@@ -110,6 +191,36 @@ void DanceFloor::close()
     isOpen = false;
     std::cout << "The Dance Floor has been cleared and closed."
               << std::endl;
+}
+
+void DanceFloor::update(Notice* notice) {
+    if (notice == nullptr) return;
+    
+    switch (notice->getNoticeType()) {
+        case Notice::CAPACITY_ALERT:
+            if (attendeeCount >= maxOccupancy) {
+                std::cout << "DanceFloor: FULL - No more attendees allowed!" << std::endl;
+            } else {
+                std::cout << "DanceFloor: " << attendeeCount << "/" << maxOccupancy 
+                          << " - still accepting attendees." << std::endl;
+            }
+            break;
+        case Notice::WEATHER_ALERT:
+            std::cout << "DanceFloor: Moving attendees indoors due to weather!" << std::endl;
+            break;
+        case Notice::EVACUATE:
+            std::cout << "DanceFloor: Evacuating all attendees!" << std::endl;
+            attendeeCount = 0;
+            break;
+        case Notice::OPEN:
+            std::cout << "DanceFloor: Opening for attendees." << std::endl;
+            break;
+        case Notice::CLOSE:
+            std::cout << "DanceFloor: Closing and clearing area." << std::endl;
+            break;
+        default:
+            std::cout << "DanceFloor: Received notice: " << notice->getNotice() << std::endl;
+    }
 }
 
 BurgerVendor::BurgerVendor(int stockLevel, int capacity)
@@ -166,6 +277,36 @@ void BeverageVendor::close()
               << std::endl;
 }
 
+void BurgerVendor::update(Notice* notice) {
+    if (notice == nullptr) return;
+    
+    switch (notice->getNoticeType()) {
+        case Notice::WEATHER_ALERT:
+            std::cout << "BurgerVendor: Closing grill temporarily due to weather!" << std::endl;
+            break;
+        case Notice::EVACUATE:
+            std::cout << "BurgerVendor: Closing immediately for evacuation!" << std::endl;
+            break;
+        case Notice::CAPACITY_ALERT:
+            std::cout << "BurgerVendor: Limiting queue size." << std::endl;
+            break;
+        case Notice::OPEN:
+            std::cout << "BurgerVendor: Opening for service." << std::endl;
+            break;
+        case Notice::CLOSE:
+            std::cout << "BurgerVendor: Closing for the day." << std::endl;
+            break;
+        case Notice::PAUSE:
+            std::cout << "BurgerVendor: Pausing food service." << std::endl;
+            break;
+        case Notice::RESUME:
+            std::cout << "BurgerVendor: Resuming food service." << std::endl;
+            break;
+        default:
+            std::cout << "BurgerVendor: Received notice: " << notice->getNotice() << std::endl;
+    }
+}
+
 SecurityPost::SecurityPost(int level, int capacity)
     : FestivalUnit("Security Post", capacity),
       securityLevel(level)
@@ -193,6 +334,24 @@ void SecurityPost::reportStatus() const
               << std::endl;
 }
 
+void SecurityPost::update(Notice* notice) {
+    if (notice == nullptr) return;
+    
+    switch (notice->getNoticeType()) {
+        case Notice::CAPACITY_ALERT:
+            std::cout << "SecurityPost: Enforcing capacity limits!" << std::endl;
+            break;
+        case Notice::WEATHER_ALERT:
+            std::cout << "SecurityPost: Monitoring weather situation." << std::endl;
+            break;
+        case Notice::EVACUATE:
+            std::cout << "SecurityPost: Assisting with evacuation!" << std::endl;
+            break;
+        default:
+            std::cout << "SecurityPost: Maintaining security." << std::endl;
+    }
+}
+
 FirstAidTent::FirstAidTent(int staff, int capacity)
     : FestivalUnit("First Aid Tent", capacity),
       medicalStaffCount(staff)
@@ -218,4 +377,19 @@ void FirstAidTent::close()
     isOpen = false;
     std::cout << "The First Aid Tent has completed its services for the event."
               << std::endl;
+}
+
+void FirstAidTent::update(Notice* notice) {
+    if (notice == nullptr) return;
+    
+    switch (notice->getNoticeType()) {
+        case Notice::WEATHER_ALERT:
+            std::cout << "FirstAidTent: REMAINING OPEN during weather alert!" << std::endl;
+            break;
+        case Notice::EVACUATE:
+            std::cout << "FirstAidTent: Preparing for casualties!" << std::endl;
+            break;
+        default:
+            std::cout << "FirstAidTent: Maintaining medical services." << std::endl;
+    }
 }
