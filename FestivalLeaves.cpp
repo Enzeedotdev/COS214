@@ -393,3 +393,161 @@ void FirstAidTent::update(Notice* notice) {
             std::cout << "FirstAidTent: Maintaining medical services." << std::endl;
     }
 }
+
+VIPLounge::VIPLounge(int maxVIPCount, int capacity) : FestivalUnit("VIP Lounge", capacity), vipCount(0), maxVIPCount(maxVIPCount) {}
+
+void VIPLounge::reportStatus() const {
+    std::cout << "VIP Lounge | VIPs: "
+              << vipCount
+              << "/"
+              << maxVIPCount
+              << " | Status: "
+              << status
+              << std::endl;
+}
+
+void VIPLounge::open() {
+    isOpen = true;
+    status = "Open";
+    std::cout << "VIP Lounge is now open for VIP guests."
+              << std::endl;
+}
+
+void VIPLounge::close() {
+    isOpen = false;
+    status = "Closed";
+    std::cout << "VIP Lounge has closed for the day."
+              << std::endl;
+}
+
+void VIPLounge::update(Notice* notice) {
+    if (notice == nullptr) return;
+    
+    switch (notice->getNoticeType()) {
+        case Notice::CAPACITY_ALERT:
+            if (vipCount >= maxVIPCount) {
+                std::cout << "VIPLounge: VIP capacity reached - limiting access!" << std::endl;
+            } else {
+                std::cout << "VIPLounge: Still accepting VIP guests." << std::endl;
+            }
+            break;
+        case Notice::EVACUATE:
+            std::cout << "VIPLounge: Escorting VIPs to safety!" << std::endl;
+            break;
+        case Notice::WEATHER_ALERT:
+            std::cout << "VIPLounge: VIPs remain indoors during weather." << std::endl;
+            break;
+        default:
+            std::cout << "VIPLounge: VIP services active." << std::endl;
+    }
+}
+
+// ============================================================
+// MerchandiseStand Implementation (Original Feature 2)
+// ============================================================
+
+MerchandiseStand::MerchandiseStand(int inventoryCount, int capacity) : FestivalUnit("Merchandise Stand", capacity), inventoryCount(inventoryCount) {}
+
+void MerchandiseStand::reportStatus() const {
+    std::cout << "Merchandise Stand | Inventory: "
+              << inventoryCount
+              << " | Status: "
+              << status
+              << std::endl;
+}
+
+void MerchandiseStand::open() {
+    isOpen = true;
+    status = "Open";
+    std::cout << "Merchandise Stand is open for business."
+              << std::endl;
+}
+
+void MerchandiseStand::close() {
+    isOpen = false;
+    status = "Closed";
+    std::cout << "Merchandise Stand has closed for the day."
+              << std::endl;
+}
+
+void MerchandiseStand::update(Notice* notice) {
+    if (notice == nullptr) return;
+    
+    switch (notice->getNoticeType()) {
+        case Notice::WEATHER_ALERT:
+            std::cout << "MerchandiseStand: Covering inventory!" << std::endl;
+            break;
+        case Notice::EVACUATE:
+            std::cout << "MerchandiseStand: Securing inventory and closing!" << std::endl;
+            break;
+        case Notice::OPEN:
+            std::cout << "MerchandiseStand: Opening for sales." << std::endl;
+            break;
+        case Notice::CLOSE:
+            std::cout << "MerchandiseStand: Closing for the day." << std::endl;
+            break;
+        default:
+            std::cout << "MerchandiseStand: Selling merchandise." << std::endl;
+    }
+}
+
+// ============================================================
+// ShuttleService Implementation (Original Feature 3)
+// ============================================================
+
+ShuttleService::ShuttleService(int activeShuttles, int capacity): FestivalUnit("Shuttle Service", capacity), activeShuttles(activeShuttles), currentRoute("Main Entrance") {}
+
+void ShuttleService::reportStatus() const {
+    std::cout << "Shuttle Service | Active Shuttles: "
+              << activeShuttles
+              << " | Route: "
+              << currentRoute
+              << " | Status: "
+              << status
+              << std::endl;
+}
+
+void ShuttleService::open() {
+    isOpen = true;
+    status = "Open";
+    std::cout << "Shuttle service is now operating."
+              << std::endl;
+}
+
+void ShuttleService::close() {
+    isOpen = false;
+    status = "Closed";
+    std::cout << "Shuttle service has stopped for the day."
+              << std::endl;
+}
+
+void ShuttleService::update(Notice* notice) {
+    if (notice == nullptr) return;
+    
+    switch (notice->getNoticeType()) {
+        case Notice::SCHEDULE_CHANGE:
+            currentRoute = "Adjusted Route";
+            std::cout << "ShuttleService: Adjusting shuttle routes to "
+                      << currentRoute << "!" << std::endl;
+            break;
+        case Notice::EVACUATE:
+            currentRoute = "Evacuation Route";
+            std::cout << "ShuttleService: Dispatching emergency shuttles to "
+                      << currentRoute << "!" << std::endl;
+            break;
+        case Notice::CAPACITY_ALERT:
+            std::cout << "ShuttleService: Adding extra shuttles for capacity." << std::endl;
+            break;
+        case Notice::WEATHER_ALERT:
+            std::cout << "ShuttleService: Modifying routes for weather safety." << std::endl;
+            break;
+        case Notice::OPEN:
+            std::cout << "ShuttleService: Starting operations." << std::endl;
+            break;
+        case Notice::CLOSE:
+            std::cout << "ShuttleService: Ending operations." << std::endl;
+            break;
+        default:
+            std::cout << "ShuttleService: Operating normally." << std::endl;
+    }
+}
