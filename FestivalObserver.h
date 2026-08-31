@@ -6,6 +6,7 @@
 #include <iostream>
 #include "FestivalComponent.h"
 
+class FestivalObserver;
 /**
  * @brief Represents a notice/order that can be broadcast to observers.
  *
@@ -19,6 +20,7 @@ class Notice {
         std::string description; ///< Additional descriptive information.
 
     public:
+        Notice() : type(""), description("") {}
         /**
          * @brief Enumeration of predefined notice types.
          */
@@ -47,6 +49,13 @@ class Notice {
          * @return The type of the notice as a string.
          */
         std::string getNotice() const;
+        
+        /**
+         * @brief Gets the notice type as an enum value.
+         * 
+         * @return The NoticeType enum value.
+         */
+        NoticeType getNoticeType() const;
 };
 
 /**
@@ -106,7 +115,7 @@ class FestivalSubject {
  */
 class FestivalControl : public FestivalSubject {
     private:
-        Notice* currentNotice; ///< The most recently issued notice.
+        Notice* currentNotice; ///< The most recently issued notice (non-owning).
 
     public:
         /**
@@ -114,13 +123,13 @@ class FestivalControl : public FestivalSubject {
          */
         FestivalControl();
 
-                /**
+        /**
          * @brief Issues a notice to all registered observers.
          * 
          * The notice is stored as the current notice and broadcast
          * to all registered observers.
          * 
-         * @param notice The notice to issue.
+         * @param notice The notice to issue. Must not be nullptr.
          */
         void issueNotice(Notice* notice);
 
@@ -164,7 +173,7 @@ class FestivalObserver {
         /**
          * @brief Called by a subject when a notice is broadcast.
          * 
-         * @param notice The notice being broadcast.
+         * @param notice The notice being broadcast. Must not be nullptr.
          */
         virtual void update(Notice* notice) = 0;
 };
@@ -175,19 +184,24 @@ class FestivalObserver {
  * FestivalGroup is the Composite participant of the
  * Composite pattern. It owns FestivalComponent children
  * and applies operations recursively across the subtree.
+ * It also acts as both an Observer and Subject to cascade
+ * notifications down the hierarchy.
  */
 class FestivalGroup : public FestivalComponent, public FestivalObserver, public FestivalSubject
 {
 private:
-
     /**
      * @brief Owned child components.
      */
     std::vector<FestivalComponent*> children;
-    Notice* lastReceivedNotice;
+    
+    /**
+     * @brief Most recently received notice (non-owning).
+     */
+    Notice lastReceivedNotice;
+    bool hasReceivedNotice;
 
 public:
-
     /**
      * @brief Creates a festival group.
      *
@@ -215,15 +229,42 @@ public:
      *
      * The component is removed without being deleted.
      * Ownership is transferred to the caller.
+     * If the component is also an Observer, it is detached.
      *
      * @param component Component to remove.
      * @return Pointer to the removed component.
      */
     FestivalComponent* remove(FestivalComponent* component);
-    void update(Notice* notice);
-    void attach(FestivalObserver* observer);
-    void detach(FestivalObserver* observer);
-    void notify();
+
+    /**
+     * @brief Called when a notice is received from a parent subject.
+     * 
+     * As an Observer, this method processes the notice and then
+     * forwards it to all registered observers (its children if
+     * they are registered).
+     * 
+     * @param notice The notice received. Must not be nullptr.
+     */
+    void update(Notice* notice) override;
+
+    /**
+     * @brief Registers an observer with this group.
+     * 
+     * @param observer The observer to register. Must not be nullptr.
+     */
+    void attach(FestivalObserver* observer) override;
+
+    /**
+     * @brief Unregisters an observer from this group.
+     * 
+     * @param observer The observer to detach.
+     */
+    void detach(FestivalObserver* observer) override;
+
+    /**
+     * @brief Notifies all registered observers with the last received notice.
+     */
+    void notify() override;
 
     /**
      * @brief Opens this group and all children.
