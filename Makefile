@@ -15,7 +15,7 @@ SRCS = main.cpp \
 HDRS = FestivalComponent.h \
        FestivalObserver.h \
        FestivalGroup.h
-	   
+
 # Object files
 OBJS = $(SRCS:.cpp=.o)
 
@@ -37,10 +37,6 @@ clean:
 # Run the program
 run: $(TARGET)
 	./$(TARGET)
-
-# Generate Doxygen documentation
-docs:
-	doxygen Doxyfile
 
 # Phony targets (not real files)
 .PHONY: all clean run docs
