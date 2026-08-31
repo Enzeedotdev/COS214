@@ -4,18 +4,32 @@
 #include "FestivalUnit.h"
 #include <string>
 
+/**
+* @brief Represents the main performance stage.
+*
+* Stores information about the performer currently on stage.
+*/
 class MainStage : public FestivalUnit
 {
 private:
     std::string currentPerformer;
 
 public:
+    /** 
+    * @brief Creates a MainStage.
+    *
+    * @param performer Current performer.
+    * @param capacity Stage capacity.
+    */
     MainStage(const std::string& performer, int capacity);
     void reportStatus() const override;
     void open() override;
     void close() override;
 };
 
+/**
+* @brief Represents a backstage preparation area.
+*/
 class BackStage : public FestivalUnit
 {
 private:
@@ -28,6 +42,9 @@ public:
     void close() override;
 };
 
+/**
+* @brief Represents an electronic music stage.
+*/
 class DJStage : public FestivalUnit
 {
 private:
@@ -40,6 +57,9 @@ public:
     void close() override;
 };
 
+/**
+* @brief Represents the festiv*l dance floor area.
+*/
 class DanceFloor : public FestivalUnit
 {
 private:
@@ -53,6 +73,9 @@ public:
     void close() override;
 };
 
+/**
+* @brief Represents a food vendor selling burgers.
+*/
 class BurgerVendor : public FestivalUnit
 {
 private:
@@ -65,6 +88,9 @@ public:
     void close() override;
 };
 
+/**
+*@brief Represents the drinks vendor.
+*/
 class BeverageVendor : public FestivalUnit
 {
 private:
@@ -77,6 +103,9 @@ public:
     void close() override;
 };
 
+/**
+* @brief Represents a security monitoring point.
+*/
 class SecurityPost : public FestivalUnit
 {
 private:
@@ -89,6 +118,9 @@ public:
     void close() override;
 };
 
+/**
+* @brief Represents a medical assistance station.
+*/
 class FirstAidTent : public FestivalUnit
 {
 private:
