@@ -25,6 +25,7 @@ public:
     void reportStatus() const override;
     void open() override;
     void close() override;
+    void update(Notice* notice) override;
 };
 
 /**
@@ -40,6 +41,7 @@ public:
     void reportStatus() const override;
     void open() override;
     void close() override;
+    void update(Notice* notice) override;
 };
 
 /**
@@ -55,6 +57,7 @@ public:
     void reportStatus() const override;
     void open() override;
     void close() override;
+    void update(Notice* notice) override;
 };
 
 /**
@@ -71,6 +74,7 @@ public:
     void reportStatus() const override;
     void open() override;
     void close() override;
+    void update(Notice* notice) override;
 };
 
 /**
@@ -86,6 +90,7 @@ public:
     void reportStatus() const override;
     void open() override;
     void close() override;
+    void update(Notice* notice) override;
 };
 
 /**
@@ -101,6 +106,7 @@ public:
     void reportStatus() const override;
     void open() override;
     void close() override;
+    void update(Notice* notice) override;
 };
 
 /**
@@ -116,6 +122,7 @@ public:
     void reportStatus() const override;
     void open() override;
     void close() override;
+    void update(Notice* notice) override;
 };
 
 /**
@@ -131,6 +138,66 @@ public:
     void reportStatus() const override;
     void open() override;
     void close() override;
+    void update(Notice* notice) override;
+};
+
+/**
+ * @brief Represents a VIP lounge area.
+ *
+ * Original feature: VIP area with limited access and
+ * special handling of capacity alerts.
+ */
+class VIPLounge : public FestivalUnit
+{
+private:
+    int vipCount;
+    int maxVIPCount;
+
+public:
+    VIPLounge(int maxVIPCount, int capacity);
+    void reportStatus() const override;
+    void open() override;
+    void close() override;
+    void update(Notice* notice) override;
+};
+
+/**
+ * @brief Represents a merchandise stand.
+ *
+ * Original feature: Merchandise stand that protects
+ * inventory during weather alerts.
+ */
+class MerchandiseStand : public FestivalUnit
+{
+private:
+    int inventoryCount;
+
+public:
+    MerchandiseStand(int inventoryCount, int capacity);
+    void reportStatus() const override;
+    void open() override;
+    void close() override;
+    void update(Notice* notice) override;
+};
+
+/**
+ * @brief Represents a shuttle service.
+ *
+ * Original feature: Shuttle service that reroutes during
+ * schedule changes and evacuations.
+ */
+class ShuttleService : public FestivalUnit
+{
+private:
+    int activeShuttles;
+    std::string currentRoute;
+
+public:
+    ShuttleService(int activeShuttles, int capacity);
+    void reportStatus() const override;
+    void open() override;
+    void close() override;
+    void update(Notice* notice) override;
 };
 
 #endif
