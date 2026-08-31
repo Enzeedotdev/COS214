@@ -77,6 +77,7 @@ void FestivalGroup::update(Notice* notice) {
     // Store the notice for forwarding
     lastReceivedNotice = *notice;
     hasReceivedNotice = true;
+    notify();
 }
 
 /**

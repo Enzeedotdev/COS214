@@ -325,6 +325,30 @@ void BeverageVendor::close()
               << std::endl;
 }
 
+void BeverageVendor::update(Notice* notice) {
+    if (notice == nullptr) return;
+    
+    switch (notice->getNoticeType()) {
+        case Notice::WEATHER_ALERT:
+            std::cout << "BeverageVendor: Protecting drinks from weather!" << std::endl;
+            break;
+        case Notice::EVACUATE:
+            std::cout << "BeverageVendor: Closing immediately for evacuation!" << std::endl;
+            break;
+        case Notice::CAPACITY_ALERT:
+            std::cout << "BeverageVendor: Limiting drink sales during capacity alert." << std::endl;
+            break;
+        case Notice::OPEN:
+            std::cout << "BeverageVendor: Opening for service." << std::endl;
+            break;
+        case Notice::CLOSE:
+            std::cout << "BeverageVendor: Closing for the day." << std::endl;
+            break;
+        default:
+            std::cout << "BeverageVendor: Received notice: " << notice->getNotice() << std::endl;
+    }
+}
+
 void BurgerVendor::update(Notice* notice) {
     if (notice == nullptr) return;
     

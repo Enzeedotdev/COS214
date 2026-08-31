@@ -8,12 +8,14 @@ TARGET = eventflow
 # Source files
 SRCS = main.cpp \
        FestivalComponent.cpp \
-       FestivalObserver.cpp 
+       FestivalObserver.cpp \
+       FestivalGroup.cpp
 
 # Header files (for dependency tracking)
 HDRS = FestivalComponent.h \
-       FestivalObserver.h 
-
+       FestivalObserver.h \
+       FestivalGroup.h
+	   
 # Object files
 OBJS = $(SRCS:.cpp=.o)
 

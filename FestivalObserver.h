@@ -4,7 +4,9 @@
 #include <vector>
 #include <string>
 #include <iostream>
-#include "FestivalComponent.h"
+
+class FestivalComponent;  // Forward declaration
+class FestivalObserver;   // Forward declaration
 
 class FestivalObserver;
 /**

@@ -4,9 +4,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
-
-class FestivalObserver;  // Forward declaration
-class Notice;            // Forward declaration
+#include "FestivalObserver.h"
 
 /**
 * @brief Common component abstraction for all festival elements.
@@ -29,7 +27,7 @@ public:
      * @param name Name of the component.
      * @param capacity Maximum capacity of the component.
      */
-    FestivalComponent(const std::string& name, int capacity);
+    FestivalComponent(const std::string name, int capacity);
 
     /**
      * @brief Virtual destructor for safe polymorphic deletion.
