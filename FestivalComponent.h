@@ -1,6 +1,7 @@
 #ifndef FESTIVALCOMPONENT_H
 #define FESTIVALCOMPONENT_H
 
+#include <iostream>
 #include <string>
 #include <vector>
 #include "FestivalObserver.h"
@@ -57,8 +58,6 @@ public:
 };
 
 
-
-
 /**
  * @brief Represents an operational unit within the festival.
  *
@@ -66,7 +65,7 @@ public:
  * pattern. Unlike FestivalGroup, a FestivalUnit cannot contain
  * other FestivalComponents.
  */
-class FestivalUnit : public FestivalComponent
+class FestivalUnit : public FestivalComponent, public FestivalObserver
 {
 protected:
 
@@ -111,6 +110,15 @@ public:
      * @return Unit capacity.
      */
     virtual int getCapacity() const override;
+
+        /**
+     * @brief Called when a notice is received from a subject.
+     *
+     * Concrete leaves override this to react differently to notices.
+     *
+     * @param notice The notice received. Must not be nullptr.
+     */
+    virtual void update(Notice* notice) override;
 };
 
 
@@ -135,6 +143,7 @@ public:
     void reportStatus() const override;
     void open() override;
     void close() override;
+    void update(Notice* notice) override;
 };
 
 /**
@@ -150,6 +159,7 @@ public:
     void reportStatus() const override;
     void open() override;
     void close() override;
+    void update(Notice* notice) override;
 };
 
 /**
@@ -165,6 +175,7 @@ public:
     void reportStatus() const override;
     void open() override;
     void close() override;
+    void update(Notice* notice) override;
 };
 
 /**
@@ -181,6 +192,7 @@ public:
     void reportStatus() const override;
     void open() override;
     void close() override;
+    void update(Notice* notice) override;
 };
 
 /**
@@ -196,6 +208,7 @@ public:
     void reportStatus() const override;
     void open() override;
     void close() override;
+    void update(Notice* notice) override;
 };
 
 /**
@@ -211,6 +224,7 @@ public:
     void reportStatus() const override;
     void open() override;
     void close() override;
+    void update(Notice* notice) override;
 };
 
 /**
@@ -226,6 +240,7 @@ public:
     void reportStatus() const override;
     void open() override;
     void close() override;
+    void update(Notice* notice) override;
 };
 
 /**
@@ -241,6 +256,66 @@ public:
     void reportStatus() const override;
     void open() override;
     void close() override;
+    void update(Notice* notice) override;
+};
+
+/**
+ * @brief Represents a VIP lounge area.
+ *
+ * Original feature: VIP area with limited access and
+ * special handling of capacity alerts.
+ */
+class VIPLounge : public FestivalUnit
+{
+private:
+    int vipCount;
+    int maxVIPCount;
+
+public:
+    VIPLounge(int maxVIPCount, int capacity);
+    void reportStatus() const override;
+    void open() override;
+    void close() override;
+    void update(Notice* notice) override;
+};
+
+/**
+ * @brief Represents a merchandise stand.
+ *
+ * Original feature: Merchandise stand that protects
+ * inventory during weather alerts.
+ */
+class MerchandiseStand : public FestivalUnit
+{
+private:
+    int inventoryCount;
+
+public:
+    MerchandiseStand(int inventoryCount, int capacity);
+    void reportStatus() const override;
+    void open() override;
+    void close() override;
+    void update(Notice* notice) override;
+};
+
+/**
+ * @brief Represents a shuttle service.
+ *
+ * Original feature: Shuttle service that reroutes during
+ * schedule changes and evacuations.
+ */
+class ShuttleService : public FestivalUnit
+{
+private:
+    int activeShuttles;
+    std::string currentRoute;
+
+public:
+    ShuttleService(int activeShuttles, int capacity);
+    void reportStatus() const override;
+    void open() override;
+    void close() override;
+    void update(Notice* notice) override;
 };
 
 
