@@ -2,6 +2,7 @@
 #define FESTIVALLEAVES_H
 
 #include "FestivalUnit.h"
+#include <string>
 
 class MainStage : public FestivalUnit
 {
@@ -10,7 +11,7 @@ private:
 
 public:
     MainStage(const std::string& performer, int capacity);
-    void reportStatus() const;
+    void reportStatus() const override;
 };
 
 class BackStage : public FestivalUnit
@@ -20,7 +21,7 @@ private:
 
 public:
     BackStage(int crewMembers, int capacity);
-    void reportStatus() const;
+    void reportStatus() const override;
 };
 
 class DJStage : public FestivalUnit
@@ -30,7 +31,7 @@ private:
 
 public:
     DJStage(const std::string& dj, int capacity);
-    void reportStatus() const;
+    void reportStatus() const override;
 };
 
 class DanceFloor : public FestivalUnit
@@ -41,7 +42,7 @@ private:
 
 public:
     DanceFloor(int maxOccupancy);
-    void reportStatus() const;
+    void reportStatus() const override;
 };
 
 class BurgerVendor : public FestivalUnit
@@ -51,7 +52,7 @@ private:
 
 public:
     BurgerVendor(int stockLevel, int capacity);
-    void reportStatus() const;
+    void reportStatus() const override;
 };
 
 class BeverageVendor : public FestivalUnit
@@ -61,7 +62,7 @@ private:
 
 public:
     BeverageVendor(int drinkLevel, int capacity);
-    void reportStatus() const;
+    void reportStatus() const override;
 };
 
 class SecurityPost : public FestivalUnit
@@ -71,7 +72,7 @@ private:
 
 public:
     SecurityPost(int level, int capacity);
-    void reportStatus() const;
+    void reportStatus() const override;
 };
 
 class FirstAidTent : public FestivalUnit
@@ -81,7 +82,7 @@ private:
 
 public:
     FirstAidTent(int staff, int capacity);
-    void reportStatus() const;
+    void reportStatus() const override;
 };
 
 #endif

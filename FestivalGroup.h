@@ -11,10 +11,10 @@ private:
 
 public:
     FestivalGroup(const std::string& name, int capacity = 0);
-    virtual ~FestivalGroup();
+    virtual ~FestivalGroup() override;
 
     void add(FestivalComponent* component);
-    void remove(FestivalComponent* component);
+    FestivalComponent* remove(FestivalComponent* component);
 
     void open();
     void close();

@@ -22,18 +22,19 @@ void FestivalGroup::add(FestivalComponent* component)
     }
 }
 
-void FestivalGroup::remove(FestivalComponent* component)
+FestivalComponent* FestivalGroup::remove(FestivalComponent* component)
 {
-    for (std::vector<FestivalComponent*>::iterator it = children.begin();
-         it != children.end();
-         ++it)
+    for (auto it = children.begin(); it != children.end(); ++it)
     {
         if (*it == component)
         {
+            FestivalComponent* removed = *it;
             children.erase(it);
-            break;
+            return removed;
         }
     }
+
+    return nullptr;
 }
 
 void FestivalGroup::open()

@@ -10,11 +10,12 @@ protected:
 
 public:
     FestivalUnit(const std::string& name, int capacity);
+    virtual ~FestivalUnit() = default;
 
-    virtual void open();
-    virtual void close();
-    virtual void reportStatus() const;
-    virtual int getCapacity() const;
+    virtual void open() override;
+    virtual void close() override;
+    virtual void reportStatus() const override;
+    virtual int getCapacity() const override;
 };
 
 #endif
