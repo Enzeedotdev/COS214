@@ -143,3 +143,30 @@ void FestivalGroup::update(Notice* notice) {
     std::cout << name << " received notice: " << notice->getNotice() << std::endl;
     notify();
 }
+
+void FestivalGroup::attach(FestivalObserver* observer) {
+    if(observer == nullptr) return;
+
+    for (size_t i = 0; i < observerList.size(); i++) {
+        if (observerList[i] == observer) {
+            std::cout << "Observer already registered to " << name << "." << std::endl;
+            return;
+        }
+    }
+    
+    observerList.push_back(observer);
+    std::cout << "Observer attached to " << name << "." << std::endl;
+}
+
+void FestivalGroup::detach(FestivalObserver* observer) {
+    if(observer == nullptr) return;
+    
+
+    auto it = std::remove(observerList.begin(), observerList.end(), observer);
+    if (it != observerList.end()) {
+        observerList.erase(it, observerList.end());
+        std::cout << "Observer detached from " << name << "." << std::endl;
+    } else {
+        std::cout << "Observer not found in " << name << " - nothing detached." << std::endl;
+    }
+}
