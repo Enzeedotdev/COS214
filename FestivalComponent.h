@@ -4,7 +4,9 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include "FestivalObserver.h"
+
+class FestivalObserver;  // Forward declaration
+class Notice;            // Forward declaration
 
 /**
 * @brief Common component abstraction for all festival elements.
