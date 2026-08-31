@@ -41,7 +41,7 @@ class Notice {
          * @param noticeType The type of the notice as a string.
          * @param noticeDescription Additional descriptive information.
          */
-        Notice(std::string& noticeType, std::string& noticeDescription);
+        Notice(std::string noticeType, std::string noticeDescription);
 
         /**
          * @brief Retrieves the notice type.
