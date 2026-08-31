@@ -243,4 +243,5 @@ public:
     void close() override;
 };
 
+
 #endif //FESTIVALCOMPONENT_H

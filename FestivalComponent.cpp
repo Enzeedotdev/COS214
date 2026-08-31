@@ -8,3 +8,4 @@ FestivalComponent::FestivalComponent(std::string name, int capacity)
 FestivalComponent::~FestivalComponent()
 {
 }
+
