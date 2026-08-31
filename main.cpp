@@ -1,6 +1,7 @@
 #include <iostream>
 #include "FestivalComponent.h"
 #include "FestivalObserver.h"
+#include "FestivalGroup.h"
 
 
 /**
