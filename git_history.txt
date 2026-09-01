@@ -1,0 +1,51 @@
+1f1c532 | Enzeedotdev | 2026-09-01 | updated PDF
+277fda6 | Enzeedotdev | 2026-09-01 | Final changes
+dcc13fc | Enzeedotdev | 2026-09-01 | Updated readme
+65e9a00 | N-Githu | 2026-09-01 | Merge branch 'main' of https://github.com/Enzeedotdev/COS214
+84b7901 | N-Githu | 2026-09-01 | Created the readme
+653a3bd | u25622103-droid | 2026-09-01 | Fixed makefile
+88f50a9 | u25622103-droid | 2026-09-01 | Final touches
+c5cf5bf | u25622103-droid | 2026-08-31 | Fixed
+c9cc40d | u25622103-droid | 2026-08-31 | New class
+2b3241c | u25622103-droid | 2026-08-31 | Removed festival group
+ebe0bc0 | u25622103-droid | 2026-08-31 | Forward declared needed classes
+d05bde1 | u25622103-droid | 2026-08-31 | Declaration for festival group
+0c5d1d3 | u25622103-droid | 2026-08-31 | Removed festival Group
+31df069 | u25622103-droid | 2026-08-31 | Fixed notice contructor implementation
+bd1bc3a | u25622103-droid | 2026-08-31 | Main
+52837c4 | u25622103-droid | 2026-08-31 | Fixed festival group contructor
+2644457 | u25622103-droid | 2026-08-31 | Fixed notice contructor
+88d3581 | u25622103-droid | 2026-08-31 | Merge branch 'main' of https://github.com/Enzeedotdev/COS214
+81edfa7 | N-Githu | 2026-08-31 | Deleted duplicate files
+1cd52f7 | N-Githu | 2026-08-31 | Updated the festival component files
+42d28cd | u25622103-droid | 2026-08-31 | Makefile
+5ad48d2 | u25622103-droid | 2026-08-31 | Putting everything together
+b1d5568 | u25622103-droid | 2026-08-31 | Added new features
+be2b44c | u25622103-droid | 2026-08-31 | Implemented update for all units
+aff7849 | u25622103-droid | 2026-08-31 | Added update function for existing units. Added three new units
+15545f6 | u25622103-droid | 2026-08-31 | Fixed
+d76a42e | u25622103-droid | 2026-08-31 | Fixed
+60c7b7c | u25622103-droid | 2026-08-31 | Added update function
+b2a3af8 | u25622103-droid | 2026-08-31 | Fixed inheritance
+60053a2 | u25622103-droid | 2026-08-31 | Finished
+ac2a80c | u25622103-droid | 2026-08-31 | Update FestivalObserver.cpp
+770e89b | u25622103-droid | 2026-08-31 | Added a new attribute for notice
+dfb6b1e | u25622103-droid | 2026-08-31 | Still implementing festival group
+2e32460 | u25622103-droid | 2026-08-31 | Fixed
+7eef162 | u25622103-droid | 2026-08-31 | Implemented festivalControl, still implementing
+87b157b | u25622103-droid | 2026-08-31 | Still implementing
+e3e05cb | u25622103-droid | 2026-08-31 | Added festival group
+1812a74 | u25622103-droid | 2026-08-31 | Removed festival group
+38dd3d9 | u25622103-droid | 2026-08-31 | Add the deoxygen messages
+6b5e8cb | u25622103-droid | 2026-08-31 | Fixed festival group
+7a9627c | u25622103-droid | 2026-08-31 | Made festival subject abstract
+55ff9b3 | u25622103-droid | 2026-08-31 | Moved compositite design pattern into this file
+9976742 | u25622103-droid | 2026-08-31 | Observer for the festival
+f7d72c6 | N-Githu | 2026-08-31 | Added some deoxygen documentation
+4e98b50 | N-Githu | 2026-08-31 | Remove main.cpp from repository
+b607b4f | N-Githu | 2026-08-31 | Fixed the pdf document, fixed uml and added task 2
+0c89bc9 | N-Githu | 2026-08-31 | Adjusted the behaviours of the leaves
+3394dd8 | N-Githu | 2026-08-31 | Fixed ownership issues in the remove method  and explicitly set the override keyword for required methods
+1f1f6cf | N-Githu | 2026-08-30 | Created the composite and component class
+08b396d | N-Githu | 2026-08-30 | Remove UML image from repository
+d60a480 | Nare | 2026-08-30 | Created UML diagram and finished task 1
