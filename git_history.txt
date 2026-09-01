@@ -1,3 +1,5 @@
+7a60605 | u25622103-droid | 2026-09-01 | Added repo link
+6977450 | u25622103-droid | 2026-09-01 | Git history
 1f1c532 | Enzeedotdev | 2026-09-01 | updated PDF
 277fda6 | Enzeedotdev | 2026-09-01 | Final changes
 dcc13fc | Enzeedotdev | 2026-09-01 | Updated readme

@@ -1,3 +1,5 @@
+* 7a60605 Added repo link
+* 6977450 Git history
 * 1f1c532 updated PDF
 * 277fda6 Final changes
 * dcc13fc Updated readme
