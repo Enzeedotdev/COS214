@@ -2,7 +2,7 @@
 
 ## Team Members
 - Nare Maela (24607917)
-- Giselle Mpye (Student Number)
+- Giselle Mpye (25622103)
 - Shepherd Nzimande (25066120)
 
 ## Event Concept

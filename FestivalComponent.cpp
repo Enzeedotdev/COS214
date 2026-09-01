@@ -193,6 +193,7 @@ void DJStage::update(Notice* notice) {
             break;
         case Notice::CAPACITY_ALERT:
             std::cout << "DJStage: Limiting entry to dance floor." << std::endl;
+            reportStatus();
             break;
         case Notice::OPEN:
             std::cout << "DJStage: Opening for electronic music sets." << std::endl;
@@ -246,8 +247,10 @@ void DanceFloor::update(Notice* notice) {
     
     switch (notice->getNoticeType()) {
         case Notice::CAPACITY_ALERT:
+            reportStatus();
             if (attendeeCount >= maxOccupancy) {
                 std::cout << "DanceFloor: FULL - No more attendees allowed!" << std::endl;
+                close();
             } else {
                 std::cout << "DanceFloor: " << attendeeCount << "/" << maxOccupancy 
                           << " - still accepting attendees." << std::endl;
